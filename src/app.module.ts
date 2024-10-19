@@ -5,6 +5,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 
 import { AppController } from './app.controller';
+import { TestModule } from './application/test/test.module';
 
 @Module({
   imports: [
@@ -22,6 +23,8 @@ import { AppController } from './app.controller';
       : CacheModule.register({
           isGlobal: true,
         }),
+    /* Domain 별 모듈 추가 관리 */
+    TestModule,
   ],
   controllers: [AppController],
 })
