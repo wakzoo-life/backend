@@ -20,7 +20,7 @@ export class TestController {
   get(@Param('testParam') testParam: string): TestResDto {
 
     log('testParam', testParam);
-    const result = new TestResDto(this.testService.getTestValue());
+    const result = TestResDto.from(testParam);
     return result;
   }
 
@@ -30,7 +30,7 @@ export class TestController {
     log('testReqDto', testReqDto);
     
     const resultStr = this.testService.postTestValue(testReqDto.strParam);
-    const result = new TestResDto(resultStr);
+    const result = TestResDto.from(resultStr);
     return result;
   }
 

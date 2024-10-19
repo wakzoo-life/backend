@@ -12,4 +12,8 @@ export class TestResDto {
     this.test = test;
   }
 
+  static from(test: string): TestResDto {
+    const it = new TestResDto(test);
+    return it;
+  }
 }
