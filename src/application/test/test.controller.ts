@@ -19,7 +19,6 @@ export class TestController {
   @ApiResponse({ status: 200, description: 'Success', type: TestResDto }) 
   get(@Param('testParam') testParam: string): TestResDto {
 
-    log('testParam', testParam);
     const result = TestResDto.from(testParam);
     return result;
   }
@@ -27,7 +26,6 @@ export class TestController {
   @Post()
   @ApiResponse({ status: 200, description: 'Success', type: TestResDto }) 
   post(@Body() testReqDto: TestReqDto): TestResDto {
-    log('testReqDto', testReqDto);
     
     const resultStr = this.testService.postTestValue(testReqDto.strParam);
     const result = TestResDto.from(resultStr);

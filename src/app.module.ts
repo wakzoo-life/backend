@@ -6,6 +6,8 @@ import { redisStore } from 'cache-manager-redis-yet';
 
 import { AppController } from './app.controller';
 import { TestModule } from './application/test/test.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { AppScheduler } from './scheduler/app.scheduler';
 
 @Module({
   imports: [
@@ -25,7 +27,11 @@ import { TestModule } from './application/test/test.module';
         }),
     /* Domain 별 모듈 추가 관리 */
     TestModule,
+
+    /* Scheduler 설정 */
+    ScheduleModule.forRoot(),
   ],
+  providers: [AppScheduler],
   controllers: [AppController],
 })
 export class AppModule {}
