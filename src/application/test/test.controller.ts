@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+
+import { TestService } from './test.service';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { log } from 'console';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -11,12 +13,14 @@ import { TestReqDto } from './dto/req/TestReqDto';
 @Controller('/test')
 export class TestController {
 
+  constructor(private readonly testService: TestService) {}
+
   @Get(':testParam')
   @ApiResponse({ status: 200, description: 'Success', type: TestResDto }) 
   get(@Param('testParam') testParam: string): TestResDto {
 
     log('testParam', testParam);
-    const result = new TestResDto('get-test-value');
+    const result = TestResDto.from(testParam);
     return result;
   }
 
@@ -24,7 +28,9 @@ export class TestController {
   @ApiResponse({ status: 200, description: 'Success', type: TestResDto }) 
   post(@Body() testReqDto: TestReqDto): TestResDto {
     log('testReqDto', testReqDto);
-    const result = new TestResDto(testReqDto.strParam);
+    
+    const resultStr = this.testService.postTestValue(testReqDto.strParam);
+    const result = TestResDto.from(resultStr);
     return result;
   }
 
