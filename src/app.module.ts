@@ -8,6 +8,8 @@ import { AppController } from './app.controller';
 import { TestModule } from './application/test/test.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppScheduler } from './scheduler/app.scheduler';
+import { CafeInfoModule } from './application/cafe/cafeInfo.module';
+import { CommonUtilModule } from './common/util/util.module';
 
 @Module({
   imports: [
@@ -25,8 +27,10 @@ import { AppScheduler } from './scheduler/app.scheduler';
       : CacheModule.register({
           isGlobal: true,
         }),
-    /* Domain 별 모듈 추가 관리 */
+    /* Domain 별 모듈 관리 */
     TestModule,
+    CafeInfoModule,
+    CommonUtilModule,
 
     /* Scheduler 설정 */
     ScheduleModule.forRoot(),
