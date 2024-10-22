@@ -9,7 +9,7 @@ import * as iconv from 'iconv-lite';
 @Injectable()
 export class ScrapUtil {
 	
-	async scrape(url: string, target: string): Promise<any> {
+	async scrap(url: string, target: string): Promise<any> {
     try {
       // HTTP GET 요청으로 웹 페이지 내용 가져오기 (바이너리 데이터로)
       const { data } = await axios.get(url, {
@@ -23,7 +23,6 @@ export class ScrapUtil {
       // cheerio로 HTML 파싱
       const $ = cheerio.load(decodedData);
 
-      // mem-cnt-info 클래스를 가진 요소의 텍스트 가져오기
       const result = $(target).map((_, el) => $(el).text()).get();
 
       return result;

@@ -3,6 +3,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CafeInfoService } from "./cafeInfo.service";
+import { CafeJoinUserCountResDto } from "./dto/res/cafeJoinUserResDto";
 
 
 
@@ -14,11 +15,11 @@ export class CafeInfoController {
 
   @Get('')
   @ApiResponse({ status: 200, description: 'Success', type: Map }) 
-  get(): Promise<number> {
+  async get(): Promise<CafeJoinUserCountResDto> {
 
-    const joinUserCount: Promise<number> = this.cafeInfoService.getCafeJoinedUserCount();
+    const joinUserCount: number = await this.cafeInfoService.getCafeJoinedUserCount();
     
-    return joinUserCount;
+    return CafeJoinUserCountResDto.of(joinUserCount) ;
   }
 
 }

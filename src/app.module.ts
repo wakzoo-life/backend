@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
@@ -15,7 +17,9 @@ import { CommonUtilModule } from './common/util/util.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.development', '.env'],
+      envFilePath: [
+        `.env.${process.env.NODE_ENV}`,
+        '.env'],
     }),
     process.env.ENABLE_REDIS === '1'
       ? CacheModule.register({

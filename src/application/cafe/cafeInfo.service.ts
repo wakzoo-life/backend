@@ -2,24 +2,36 @@
 
 import { Injectable } from '@nestjs/common';
 import { ScrapUtil } from '../../common/util/scrap.util';
+import { ConfigService } from '@nestjs/config';
 
 /**
  * Service for getting information about the wakzoo cafe.
  */
 @Injectable()
 export class CafeInfoService {
-
-	constructor(private readonly scrapUtil : ScrapUtil) {}
 	
-	public async getCafeJoinedUserCount(): Promise<number> {
+	wakzoocafe: string;
 
-		const url = "https://cafe.naver.com/steamindiegame/18328997"
-    const scrapedData = await this.scrapUtil.scrape(url, '.mem-cnt-info');
-    const cleanedData: string = scrapedData.map(data => data.replace(/[\t\n]/g, ''))[0];
-		const index: number = cleanedData.indexOf('비공개');
-    const joinedUserCount: number= parseInt(cleanedData.substring(5, index));
+	constructor(
+		private readonly scrapUtil : ScrapUtil, 
+		private readonly configService: ConfigService
+	) {
+		this.wakzoocafe = this.configService.get<string>('WAK_ZOO');
+	}
+	
+	async getCafeJoinedUserCount(): Promise<number> {
+		
+		// 1. 왁물원 카페 웹 페이지 스캐래핑
+    const scrapedData = await this.scrapUtil.scrap(this.wakzoocafe, '.mem-cnt-info');
+    
+		// 2. 불필요 문자열 제거
+		const cleanedData: string = scrapedData.map(data => data.replace(/[\t\n]/g, ''))[0];
+		
+		// 3. 가입한 회원 수 추출
+    const joinedUserCount: number= parseInt(cleanedData.substring(5, cleanedData.indexOf('비공개')));
 
     return joinedUserCount;
+
 	}
 
 }
