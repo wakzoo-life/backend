@@ -9,5 +9,6 @@ import { CommonUtilModule } from 'src/common/util/util.module';
   imports: [CommonUtilModule],
   controllers: [CafeInfoController],
   providers: [CafeInfoService],
+  exports: [CafeInfoService],
 })
 export class CafeInfoModule {}

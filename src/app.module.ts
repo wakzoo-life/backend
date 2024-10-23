@@ -8,10 +8,9 @@ import { redisStore } from 'cache-manager-redis-yet';
 
 import { AppController } from './app.controller';
 import { TestModule } from './application/test/test.module';
-import { ScheduleModule } from '@nestjs/schedule';
-import { AppScheduler } from './scheduler/app.scheduler';
 import { CafeInfoModule } from './application/cafe/cafeInfo.module';
 import { CommonUtilModule } from './common/util/util.module';
+import { AppSchedulerModule } from './scheduler/app.scheduler.module';
 
 @Module({
   imports: [
@@ -37,9 +36,9 @@ import { CommonUtilModule } from './common/util/util.module';
     CommonUtilModule,
 
     /* Scheduler 설정 */
-    ScheduleModule.forRoot(),
+    AppSchedulerModule,
   ],
-  providers: [AppScheduler],
+  providers: [],
   controllers: [AppController],
 })
 export class AppModule {}

@@ -1,16 +1,21 @@
 /* eslint-disable prettier/prettier */
 
 import { Injectable, Logger } from "@nestjs/common";
-import { Cron, CronExpression } from "@nestjs/schedule";
+import { Cron, CronExpression, Interval } from "@nestjs/schedule";
 import { log } from "console";
+import { CafeInfoService } from "src/application/cafe/cafeInfo.service";
 
 @Injectable()
-export class AppScheduler {
+export class AppSchedulerService {
 
-	private readonly logger = new Logger(AppScheduler.name);
+	constructor(private readonly cafeInfoService : CafeInfoService) {}
 
 	@Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT) 
+	// @Interval(1000)
 	handleCron() {
-		log('Called cron every second');
+		
+		this.cafeInfoService.setCafeJoinedUserCount();
+
 	}
+
 }

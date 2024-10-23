@@ -19,7 +19,7 @@ export class CafeInfoService {
 		this.wakzoocafe = this.configService.get<string>('WAK_ZOO');
 	}
 	
-	async getCafeJoinedUserCount(): Promise<number> {
+	private async getCafeJoinedUserCount(): Promise<number> {
 		
 		// 1. 왁물원 카페 웹 페이지 스캐래핑
     const scrapedData = await this.scrapUtil.scrap(this.wakzoocafe, '.mem-cnt-info');
@@ -32,6 +32,15 @@ export class CafeInfoService {
 
     return joinedUserCount;
 
+	}
+
+	setCafeJoinedUserCount(): void {
+
+		this.getCafeJoinedUserCount().then((joinedUserCount) => {
+			console.log(`Joined User Count: ${joinedUserCount}`);
+			// db 저장 로직 추가 지점(미구현)
+		});
+	
 	}
 
 }
